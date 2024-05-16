@@ -1,0 +1,10 @@
+.header-section-cnt {
+  background-color: #f8fafc;
+  padding: 13px 18px 1px 18px;
+  border-radius: 5px;
+}
+
+.header-section-text-cnt {
+  font-size: large;
+  font-weight: 700;
+}
