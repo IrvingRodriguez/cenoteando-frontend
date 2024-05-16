@@ -4,6 +4,9 @@ import { DashboardData } from "../../Dashboard/DashboardData";
 import "./Home.css";
 import { VisualizedCenotes } from "./VisualizedCenotes/VisualizedCenotes";
 import FavoriteCenotes from "./FavoriteCenotes/FavoriteCenotes";
+import { NewUsersList } from "./NewUsersList/NewUsersList";
+import { RequestList } from "./RequestList/RequestList";
+import { HistoryList } from "./HistoryList/HistoryList";
 
 export const Home = () => {
   return (
@@ -25,6 +28,9 @@ export const Home = () => {
         <section className="content">
           <VisualizedCenotes></VisualizedCenotes>
           <FavoriteCenotes></FavoriteCenotes>
+          <NewUsersList></NewUsersList>
+          <RequestList></RequestList>
+          <HistoryList></HistoryList>
         </section>
       </DashboardData>
     </div>

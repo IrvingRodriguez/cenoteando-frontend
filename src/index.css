@@ -19,6 +19,22 @@
   color: #ffff;
 }
 
+.btn_approve {
+  padding: 8px;
+  gap: 4px;
+  border-radius: 8px;
+  opacity: 0px;
+  background-color: #e2fff2;
+}
+
+.btn_detach {
+  padding: 8px;
+  gap: 4px;
+  border-radius: 8px;
+  opacity: 0px;
+  background-color: #ffd3d5;
+}
+
 /*Inputs*/
 .form-control-c {
   border: none !important;
@@ -43,6 +59,50 @@
   background-color: #f8fafc;
 }
 
+.tag-red-round {
+  padding: 1px 8px 1px 8px;
+  gap: 4px;
+  border-radius: 14px;
+  opacity: 0px;
+  background-color: #fedad9;
+  color: #ad070d;
+}
+
+.tag-yellow-round {
+  padding: 1px 8px 1px 8px;
+  gap: 4px;
+  border-radius: 14px;
+  opacity: 0px;
+  background-color: #fff3b9;
+  color: #71600e;
+}
+
+.tag-blue-round {
+  padding: 1px 8px 1px 8px;
+  gap: 4px;
+  border-radius: 14px;
+  opacity: 0px;
+  background-color: #c8e2ff;
+  color: #104887;
+}
+
+.tag-green-round {
+  padding: 1px 8px 1px 8px;
+  gap: 4px;
+  border-radius: 14px;
+  opacity: 0px;
+  background-color: #e2fff2;
+  color: #244c3a;
+}
+
+.tag-bluesky-round {
+  padding: 1px 8px 1px 8px;
+  gap: 4px;
+  border-radius: 14px;
+  opacity: 0px;
+  background-color: #f8fafc;
+  color: #104887;
+}
 /*Modals*/
 .modal-title-c {
   margin-bottom: 0;
@@ -69,4 +129,11 @@
   font-size: 48px;
   font-weight: 900;
   line-height: 48px;
+}
+
+/*##SECTIONS*/
+/*Home*/
+.header-section-text-cnt {
+  font-size: large;
+  font-weight: 700;
 }

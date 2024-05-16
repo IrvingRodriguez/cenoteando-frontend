@@ -7,7 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-src/Auth/AuthConstants.tsx
+#src/Auth/AuthConstants.tsx
 node_modules
 dist
 dist-ssr
