@@ -10,6 +10,7 @@ import ProtectedRoute from "./Auth/ProtectedRoute.tsx";
 import { AuthProvider } from "./Auth/AuthProvider.tsx";
 import { Users } from "./Pages/Users/Users.tsx";
 import { Home } from "./Pages/Home/Admin/Home.tsx";
+import { CenoteProfile } from "./Pages/Cenotes/CenoteProfile/CenoteProfile.tsx";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/home",
         element: <Home />,
+      },
+      {
+        path: "/cenote",
+        element: <CenoteProfile />,
       },
     ],
   },

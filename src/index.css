@@ -19,6 +19,14 @@
   color: #ffff;
 }
 
+.btn-bg-blue-round {
+  padding: 8px 24px 8px 24px;
+  border-radius: 30px;
+  opacity: 0px;
+  background: #6292ca;
+  color: #ffff;
+}
+
 .btn_approve {
   padding: 8px;
   gap: 4px;
@@ -103,6 +111,7 @@
   background-color: #f8fafc;
   color: #104887;
 }
+
 /*Modals*/
 .modal-title-c {
   margin-bottom: 0;
@@ -136,4 +145,8 @@
 .header-section-text-cnt {
   font-size: large;
   font-weight: 700;
+}
+
+.react-photo-album--photo {
+  border-radius: 10px;
 }
