@@ -18,7 +18,7 @@ export const ContentHeader = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/">
+                <Link className="nav-link" to="/List_Cenotes">
                   Lista de Cenotes
                 </Link>
               </li>

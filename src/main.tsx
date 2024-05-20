@@ -11,6 +11,8 @@ import { AuthProvider } from "./Auth/AuthProvider.tsx";
 import { Users } from "./Pages/Users/Users.tsx";
 import { Home } from "./Pages/Home/Admin/Home.tsx";
 import { CenoteProfile } from "./Pages/Cenotes/CenoteProfile/CenoteProfile.tsx";
+import { List_cenotes } from "./Pages/Cenotes/List_cenotes.tsx"
+
 
 const router = createBrowserRouter([
   {
@@ -36,6 +38,11 @@ const router = createBrowserRouter([
         path: "/cenote",
         element: <CenoteProfile />,
       },
+      {
+        path: "/List_cenotes",
+        element: <List_cenotes />,
+      },
+      
     ],
   },
 ]);
