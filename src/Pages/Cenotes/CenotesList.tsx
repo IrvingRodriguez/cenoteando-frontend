@@ -15,10 +15,10 @@ export const List_cenotes = () => {
         <section className="content-header">
           <div className="container-fluid">
             <div className="row mb-2">
-              <div className="col-sm-6 col-md-5">
+              <div className="col-sm-6 col-md-6">
                 <h1>Lista de cenotes</h1>
               </div>
-              <div className="col-sm-6 col-md-7">
+              <div className="col-sm-6 col-md-6">
                 <div className="row">
                   <div className="col-md-5">
                     <div className="input-group input-group-sm">
@@ -38,37 +38,27 @@ export const List_cenotes = () => {
                       />
                     </div>
                   </div>
-                  <div className="col-md-2">
+                  <div className="col-md-3">
                     <button
                       type="button"
                       className="btn btn-block btn-white  btn-sm"
                     >
-                      <img src="" alt="" />
+                      <img src="/src/assets/Icons/plus.svg" alt="" />
                       Nuevo cenote
                     </button>
                   </div>
-                  <div className="col-md-2">
-                    <button
-                      type="button"
-                      className="btn btn-block btn-white btn-sm"
-                      onClick={handleToggleModal}
-                    >
-                      <img src="/src/assets/Icons/add-user.svg" alt="" />
-                      Invitar
-                    </button>
-                  </div>
                   <div className="col-md-1">
-                    <a>
+                    <a className="btn btn-block btn-white  btn-sm">
                       <img src="/src/assets/Icons/edit.svg" alt="" />
                     </a>
                   </div>
                   <div className="col-md-1">
-                    <a>
+                    <a className="btn btn-block btn-white  btn-sm">
                       <img src="/src/assets/Icons/heart.svg" alt="" />
                     </a>
                   </div>
                   <div className="col-md-1">
-                    <a>
+                    <a className="btn btn-block btn-white  btn-sm">
                       <img src="/src/assets/Icons/upload.svg" alt="" />
                     </a>
                   </div>
@@ -88,9 +78,14 @@ export const List_cenotes = () => {
                         <tr>
                           <th>
                             <div>
-                              <input type="checkbox" id="myCheckbox" name="myCheckbox"/>
+                              <input
+                                type="checkbox"
+                                id="myCheckbox"
+                                name="myCheckbox"
+                              />
                             </div>
                           </th>
+                          <th></th>
                           <th>
                             ID{" "}
                             <img
@@ -160,47 +155,36 @@ export const List_cenotes = () => {
                       <tbody>
                         <tr>
                           <th>
-                            <input type="checkbox"/>
-                            
-                          </th>  
-                          <td>John </td>
-                          <td>Doe</td>
-                          <td>John@gmail.com</td>
-                          <td>
-                            <span className="tag bg-tag-success">Turista</span>
-                          </td>
-                          <td>11-7-2014</td>
-                          <td>
-                            {" "}
-                            <a>
-                              <img src="/src/assets/Icons/eye.svg" alt="" />
-                            </a>
-                            <a>
-                              <img src="/src/assets/Icons/edit.svg" alt="" />
-                            </a>
-                            <a>
-                              <img src="/src/assets/Icons/trash.svg" alt="" />
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>
-                            <input type="checkbox"/>
+                            <input type="checkbox" />
                           </th>
-                          <td>John </td>
-                          <td>Doe</td>
-                          <td>John@gmail.com</td>
                           <td>
-                            <span className="tag bg-tag-success">Turista</span>
+                            {" "}
+                            <a>
+                              <img src="/src/assets/Icons/heart.svg" alt="" />
+                            </a>
                           </td>
+                          <td>1234567 </td>
+                          <td>Chen kin</td>
+                          <td>Yucatán</td>
+                          <td>Tizimin</td>
+                          <td>Sin Tipo</td>
                           <td>11-7-2014</td>
+                          <td>2-7-2014</td>
+                          <td>
+                            <span className="tag tag-blue-round">
+                              {" "}
+                              <img
+                                src="/src/assets/Icons/beach.svg"
+                                alt=""
+                              />{" "}
+                              Turismo
+                            </span>
+                          </td>
+                          <td>8</td>
                           <td>
                             {" "}
                             <a>
                               <img src="/src/assets/Icons/eye.svg" alt="" />
-                            </a>
-                            <a>
-                              <img src="/src/assets/Icons/edit.svg" alt="" />
                             </a>
                             <a>
                               <img src="/src/assets/Icons/trash.svg" alt="" />
@@ -209,22 +193,36 @@ export const List_cenotes = () => {
                         </tr>
                         <tr>
                           <th>
-                            <input type="checkbox"/>
-                          </th>  
-                          <td>John </td>
-                          <td>Doe</td>
-                          <td>John@gmail.com</td>
+                            <input type="checkbox" />
+                          </th>
                           <td>
-                            <span className="tag bg-tag-success">Turista</span>
+                            {" "}
+                            <a>
+                              <img src="/src/assets/Icons/heart.svg" alt="" />
+                            </a>
                           </td>
+                          <td>1234567 </td>
+                          <td>Chen kin</td>
+                          <td>Yucatán</td>
+                          <td>Tizimin</td>
+                          <td>Sin Tipo</td>
                           <td>11-7-2014</td>
+                          <td>2-7-2014</td>
+                          <td>
+                            <span className="tag tag-blue-round">
+                              {" "}
+                              <img
+                                src="/src/assets/Icons/beach.svg"
+                                alt=""
+                              />{" "}
+                              Turismo
+                            </span>
+                          </td>
+                          <td>8</td>
                           <td>
                             {" "}
                             <a>
                               <img src="/src/assets/Icons/eye.svg" alt="" />
-                            </a>
-                            <a>
-                              <img src="/src/assets/Icons/edit.svg" alt="" />
                             </a>
                             <a>
                               <img src="/src/assets/Icons/trash.svg" alt="" />
@@ -233,22 +231,188 @@ export const List_cenotes = () => {
                         </tr>
                         <tr>
                           <th>
-                            <input type="checkbox"/>
-                          </th>                          
-                          <td>Jonh </td>
-                          <td>Doe</td>
-                          <td>John@gmail.com</td>
+                            <input type="checkbox" />
+                          </th>
                           <td>
-                            <span className="tag bg-tag-success">Turista</span>
+                            {" "}
+                            <a>
+                              <img src="/src/assets/Icons/heart.svg" alt="" />
+                            </a>
                           </td>
+                          <td>1234567 </td>
+                          <td>Chen kin</td>
+                          <td>Yucatán</td>
+                          <td>Tizimin</td>
+                          <td>Sin Tipo</td>
                           <td>11-7-2014</td>
+                          <td>2-7-2014</td>
+                          <td>
+                            <span className="tag tag-blue-round">
+                              {" "}
+                              <img
+                                src="/src/assets/Icons/beach.svg"
+                                alt=""
+                              />{" "}
+                              Turismo
+                            </span>
+                          </td>
+                          <td>8</td>
                           <td>
                             {" "}
                             <a>
                               <img src="/src/assets/Icons/eye.svg" alt="" />
                             </a>
                             <a>
-                              <img src="/src/assets/Icons/edit.svg" alt="" />
+                              <img src="/src/assets/Icons/trash.svg" alt="" />
+                            </a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>
+                            <input type="checkbox" />
+                          </th>
+                          <td>
+                            {" "}
+                            <a>
+                              <img src="/src/assets/Icons/heart.svg" alt="" />
+                            </a>
+                          </td>
+                          <td>1234567 </td>
+                          <td>Chen kin</td>
+                          <td>Yucatán</td>
+                          <td>Tizimin</td>
+                          <td>Sin Tipo</td>
+                          <td>11-7-2014</td>
+                          <td>2-7-2014</td>
+                          <td>
+                            <span className="tag tag-blue-round">
+                              {" "}
+                              <img
+                                src="/src/assets/Icons/beach.svg"
+                                alt=""
+                              />{" "}
+                              Turismo
+                            </span>
+                          </td>
+                          <td>8</td>
+                          <td>
+                            {" "}
+                            <a>
+                              <img src="/src/assets/Icons/eye.svg" alt="" />
+                            </a>
+                            <a>
+                              <img src="/src/assets/Icons/trash.svg" alt="" />
+                            </a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>
+                            <input type="checkbox" />
+                          </th>
+                          <td>
+                            {" "}
+                            <a>
+                              <img src="/src/assets/Icons/heart.svg" alt="" />
+                            </a>
+                          </td>
+                          <td>1234567 </td>
+                          <td>Chen kin</td>
+                          <td>Yucatán</td>
+                          <td>Tizimin</td>
+                          <td>Sin Tipo</td>
+                          <td>11-7-2014</td>
+                          <td>2-7-2014</td>
+                          <td>
+                            <span className="tag tag-blue-round">
+                              {" "}
+                              <img
+                                src="/src/assets/Icons/beach.svg"
+                                alt=""
+                              />{" "}
+                              Turismo
+                            </span>
+                          </td>
+                          <td>8</td>
+                          <td>
+                            {" "}
+                            <a>
+                              <img src="/src/assets/Icons/eye.svg" alt="" />
+                            </a>
+                            <a>
+                              <img src="/src/assets/Icons/trash.svg" alt="" />
+                            </a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>
+                            <input type="checkbox" />
+                          </th>
+                          <td>
+                            {" "}
+                            <a>
+                              <img src="/src/assets/Icons/heart.svg" alt="" />
+                            </a>
+                          </td>
+                          <td>1234567 </td>
+                          <td>Chen kin</td>
+                          <td>Yucatán</td>
+                          <td>Tizimin</td>
+                          <td>Sin Tipo</td>
+                          <td>11-7-2014</td>
+                          <td>2-7-2014</td>
+                          <td>
+                            <span className="tag tag-blue-round">
+                              {" "}
+                              <img
+                                src="/src/assets/Icons/beach.svg"
+                                alt=""
+                              />{" "}
+                              Turismo
+                            </span>
+                          </td>
+                          <td>8</td>
+                          <td>
+                            {" "}
+                            <a>
+                              <img src="/src/assets/Icons/eye.svg" alt="" />
+                            </a>
+                            <a>
+                              <img src="/src/assets/Icons/trash.svg" alt="" />
+                            </a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>
+                            <input type="checkbox" />
+                          </th>
+                          <td>
+                            {" "}
+                            <a>
+                              <img src="/src/assets/Icons/heart.svg" alt="" />
+                            </a>
+                          </td>
+                          <td>1234567 </td>
+                          <td>Chen kin</td>
+                          <td>Yucatán</td>
+                          <td>Tizimin</td>
+                          <td>Sin Tipo</td>
+                          <td>11-7-2014</td>
+                          <td>2-7-2014</td>
+                          <td>
+                            <span className="tag tag-blue-round">
+                              {" "}
+                              <img
+                                src="/src/assets/Icons/beach.svg"
+                                alt=""
+                              />{" "}
+                              Turismo
+                            </span>
+                          </td>
+                          <td>8</td>
+                          <td>
+                            {" "}
+                            <a>
+                              <img src="/src/assets/Icons/eye.svg" alt="" />
                             </a>
                             <a>
                               <img src="/src/assets/Icons/trash.svg" alt="" />
