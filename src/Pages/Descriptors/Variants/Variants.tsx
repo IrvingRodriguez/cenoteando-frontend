@@ -1,43 +1,37 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { DashboardData } from "../Dashboard/DashboardData";
-import { InviteUser } from "../../Components/Modals/InviteUser";
-import { ConfirmAction } from "../../Components/Modals/ConfirmAction";
-import { UpdateUser } from "../../Components/Modals/UpdateUser";
-import { useUsers, useDeleteUser } from "../../graphql/Users/UsersCustomHooks";
-import { UserInterface, PaginationInterface, SortInterface } from "../../Types/UserTypes";
-
+import { DashboardData } from "../../Dashboard/DashboardData";
+import { useVariables, useDeleteVariable } from "../../../graphql/Variables/VariablesCustomHooks";
+import { PaginationInterface, SortInterface } from "../../../Types/UserTypes";
 import { ClipLoader } from "react-spinners";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import _, { set } from 'lodash';
+import _ from 'lodash';
+import { VariableInterface } from "../../../Types/VariablesTypes";
+import { ConfirmAction } from "../../../Components/Modals/ConfirmAction";
+import { CreateVariable } from "../../../Components/Modals/CreateVariable";
 
-export const Users = () => {
+export const Variants = () => {
   const initialPagination: PaginationInterface = { limit: 10, offset: 0 };
   const initialSort: SortInterface = { sortOrder: "ASC", field: "name" };
-  //const initialName: string | null = null;
+  const initialName: string | null = null;
 
-  const { usersData, usersError, usersLoading, refetchUsers, updatePagination, updateSort, searchUserByName, currentSortOrder} = useUsers(initialPagination, initialSort);
-  const { handleDeleteUser, deleteUserLoading, deleteUserError, deleteUserData } = useDeleteUser();
-
-  const loading = usersLoading || deleteUserLoading;
-  const noData = !usersLoading && (!usersData || usersData.length === 0);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showInviteModal, setShowInviteModal] = useState<boolean>(false);
-  const [showUpdateModal, setShowUpdatModal] = useState<boolean>(false);
+  const { variableData,  variableError,  variableLoading, refetchVariables, updatePagination, updateSort, searchVariableByName, currentSortOrder} = useVariables(initialPagination, initialSort);
+  const { handleDeleteVariable, deleteVariableLoading, deleteVariableError, deleteVariableData } = useDeleteVariable();
+  const loading =  variableLoading || deleteVariableLoading;
+  const noData = !variableLoading && (!variableData || variableData.length === 0);
+  const [showCreateVariableModal, setShowCreateVariableModal] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [searchName, setSearchName] = useState<string>("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [ItemIdSelected, setItemIdSelected] = useState<string | null>(null)
-  const [Sort, setSort] = useState<SortInterface>(initialSort);
 
-  //FUNCIONES
   const handleSortChange = ( field: string) => {
     const newSortOrder = currentSortOrder === "ASC" ? "DESC" : "ASC";
-    setSort({ field: field, sortOrder: newSortOrder})
     updateSort({ field: field, sortOrder: newSortOrder});
   };
 
   const handleNextPage = () => {
-    console.log((initialPagination.offset || 0) + usersData.length < initialPagination.limit ? 0 : 1  )
+    console.log((initialPagination.offset || 0) + variableData.length < initialPagination.limit ? 0 : 1  )
     setCurrentPage((initialPagination.offset || 0) + initialPagination.limit);
     updatePagination({ offset: (initialPagination.offset || 0) + initialPagination.limit });
     //updatePagination({ offset: (initialPagination.offset || 0) + usersData.length < initialPagination.limit ? 1 : 0   });
@@ -59,35 +53,17 @@ export const Users = () => {
 
   const handleSearch = useCallback(
     _.debounce((name: string) => {
-      searchUserByName(name);
+      searchVariableByName(name);
     }, 1000),
     []
   );
 
-  const handleDelete = (userId: string) => {
-    handleDeleteUser(userId);
+  const handleCreateVariableToggleModal = () => {
+    setShowCreateVariableModal(!showCreateVariableModal);
   };
 
-  const handleUpdateUser = (UserId?:  string) =>{
-  
-    if(UserId){
-      setItemIdSelected(UserId)
-      setShowUpdatModal(true);
-    }
-  };
-
-  const handleUpdateUserToggleModal = () => {
-    setShowUpdatModal(!showUpdateModal);
-    if(!showUpdateModal){
-      setItemIdSelected(null);
-      console.log("setItemIdSelected")
-      console.log(setItemIdSelected)
-    }
-   
-  };
-
-  const handleInviteUserToggleModal = () => {
-    setShowInviteModal(!showInviteModal);
+  const handleDelete = (id: string) => {
+    handleDeleteVariable(id);
   };
 
   const handleOpenDeleteModal = (UserId?: string) => {
@@ -100,7 +76,9 @@ export const Users = () => {
   const handleActionDeleteConfirm = () => {
     setShowDeleteModal(false);
     setItemIdSelected('');
-    handleDelete(ItemIdSelected)
+    if(ItemIdSelected){
+      handleDelete(ItemIdSelected)
+    }
   };
 
   const handleActionDeleteCancel = () => {
@@ -108,24 +86,25 @@ export const Users = () => {
     setItemIdSelected('');
   };
 
-  //USE EFECTS
-  useEffect(() => {
+   //USE EFECTS
+   useEffect(() => {
       handleSearch(searchName);
-  }, [searchName, handleSearch, searchUserByName]);
+  }, [searchName, handleSearch, searchVariableByName]);
 
   useEffect(() => {
-    if (deleteUserData) {
+    if (deleteVariableData) {
       toast.success("Usuario eliminado exitosamente");
-      refetchUsers();
+      refetchVariables();
     }
-  }, [deleteUserData, refetchUsers]);
+  }, [deleteVariableData, refetchVariables]);
 
   useEffect(() => {
-    if (usersError || deleteUserError) {
+    if (variableError || deleteVariableError) {
         toast.error(`"Esta operación no se ha podido completar"`);
     }
-  }, [usersError, deleteUserError]);
+  }, [variableError, deleteVariableError]);
 
+  
   return (
     <>
       <DashboardData>
@@ -133,13 +112,13 @@ export const Users = () => {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6 col-md-5">
-                <h1>Usuarios</h1>
+                <h1>Variantes</h1>
                 <ToastContainer />
               </div>
               <div className="col-sm-6 col-md-7">
                 <div className="row">
                   <div className="col-md-6">
-                    <form onSubmit={handleSearch}>
+                  <form onSubmit={handleSearch}>
                       <div className="input-group input-group-sm">
                         <div className="input-group-append">
                           <span
@@ -159,7 +138,7 @@ export const Users = () => {
                       </div>
                     </form>
                   </div>
-                  <div className="col-md-2 d-none" >
+                  <div className="col-md-2 d-none">
                     <button
                       type="button"
                       className="btn btn-block btn-white  btn-sm"
@@ -172,10 +151,10 @@ export const Users = () => {
                     <button
                       type="button"
                       className="btn btn-block btn-white btn-sm"
-                      onClick={handleInviteUserToggleModal}
+                      onClick={handleCreateVariableToggleModal}
                     >
-                      <img src="/src/assets/Icons/add-user.svg" alt="" />
-                      Invitar
+                      <img src="/src/assets/Icons/plus.svg" alt="" />
+                      Crear
                     </button>
                   </div>
                   <div className="col-md-1 d-none">
@@ -199,83 +178,127 @@ export const Users = () => {
               <div className="col-12">
                 <div className="card">
                   <div className="card-body table-responsive p-0">
-                    {/* USERS TABLE */}
-                    {loading ?  ( 
+                  {loading ?  ( 
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
                       <ClipLoader loading={loading} size={50} />
                     </div>
-                    ) : noData ? (
-                    <p>No se encontraron usuarios</p>
+                  ) : noData ? (
+                    <p>No se encontraron variables</p>
                   ) : (
-                    <table className="table table-hover text-nowrap">
+                    <table className="table table-hover ">
                       <thead className="bg-header-footer">
                         <tr>
+                          
                           <th>
-                          <a onClick={() => handleSortChange("name")}>  Nombre{" "}
-                            <img
-                              src={Sort.sortOrder =='ASC' && Sort.field == 'name'  ? "/src/assets/Icons/arrow-down.svg": "/src/assets/Icons/arrow-up.svg" }
-                            /></a>
-                          </th>
-                          <th>
-                          <a onClick={() => handleSortChange("surname")}> Apellidos{" "}
-                            <img
-                              src={Sort.sortOrder =='ASC' && Sort.field == 'surname'  ? "/src/assets/Icons/arrow-down.svg": "/src/assets/Icons/arrow-up.svg" }
-                            /></a>
-                          </th>
-                          <th>
-                          <a onClick={() => handleSortChange("email")}>Correo electrónico{" "}
-                            <img
-                                src={Sort.sortOrder =='ASC' && Sort.field == 'email'  ? "/src/assets/Icons/arrow-down.svg": "/src/assets/Icons/arrow-up.svg" }
-                            /></a>
-                          </th>
-                          <th>
-                            Tipo de usuario{" "}
+                            Categoria{" "}
                             <img
                               src="/src/assets/Icons/arrow-down.svg"
                               alt=""
                             />
                           </th>
                           <th>
-                          <a onClick={() => handleSortChange("createdAt")}>Fecha de creación{" "}
+                            Nombre{" "}
                             <img
-                               src={Sort.sortOrder =='ASC' && Sort.field == 'createdAt'  ? "/src/assets/Icons/arrow-down.svg": "/src/assets/Icons/arrow-up.svg" }
-                            /></a>
+                              src="/src/assets/Icons/arrow-down.svg"
+                              alt=""
+                            />
+                          </th>
+                          <th>
+                            Descripción{" "}
+                            <img
+                              src="/src/assets/Icons/arrow-down.svg"
+                              alt=""
+                            />
+                          </th>
+                          <th>
+                            Nivel de acceso{" "}
+                            <img
+                              src="/src/assets/Icons/arrow-down.svg"
+                              alt=""
+                            />
+                          </th>
+                          <th>
+                            Tipo de dato{" "}
+                            <img
+                              src="/src/assets/Icons/arrow-down.svg"
+                              alt=""
+                            />
+                          </th>
+                          <th>
+                            Etiquetas{" "}
+                            <img
+                              src="/src/assets/Icons/arrow-down.svg"
+                              alt=""
+                            />
+                          </th>
+                          <th>
+                            Esferea{" "}
+                            <img
+                              src="/src/assets/Icons/arrow-down.svg"
+                              alt=""
+                            />
+                          </th>
+                          <th>
+                            Unidades{" "}
+                            <img
+                              src="/src/assets/Icons/arrow-down.svg"
+                              alt=""
+                            />
+                          </th>
+                          <th>
+                            Campo o Calculadas
+                            <img
+                              src="/src/assets/Icons/arrow-down.svg"
+                              alt=""
+                            />
                           </th>
                           <th></th>
                         </tr>
                       </thead>
                       <tbody>
-                 
-                        {usersData && usersData.map((item: UserInterface) => (
-                          <tr key={item.id}>
-                         
-                          <td>{item.name} </td>
-                          <td>{item.surname}</td>
-                          <td>{item.email}</td>
+                      {variableData && variableData.map((item: VariableInterface) => (
+                        <tr  key={item.name}>
                           <td>
-                            <span className="tag bg-tag-success">{item?.profile ? item?.profile : 'INDEFINIDO'}</span>
+                            <span className="tag tag-blue-round">
+                            {item.category}
+                            </span>
                           </td>
-                          <td>{item.createdAt}</td>
+                          <td>{item.name}</td>
+                          <td>
+                            {item.description}
+                          </td>
+                          <td>{item.accessLevel}</td>
+                          <td>
+                            <span className="tag tag-gray-round">{item.type}</span>
+                          </td>
+                          <td>
+                            <span className="tag tag-blue-round">
+                              {item.theme}
+                            </span>
+              
+                          </td>
+                          <td>{item.sphere}</td>
+                          <td>  {item.units}</td>
+                          <td>  {item.origin}</td>
                           <td>
                             {" "}
                             <a className="d-none">
                               <img src="/src/assets/Icons/eye.svg" alt="" />
                             </a>
-                            <a onClick={() => handleUpdateUser(item.id)}>
+                            {/*<a onClick={() => handleUpdateUser(item.id)}>
                               <img src="/src/assets/Icons/edit.svg" alt="" />
-                            </a>
-                            <a onClick={() => handleOpenDeleteModal(item.id)}>
+                            </a>*/}
+                            <a onClick={() => handleOpenDeleteModal(item.firestore_id)}>
                               <img src="/src/assets/Icons/trash.svg" alt="" />
                             </a>
                           </td>
                         </tr>
-                        )
-                        )}
+                      ))}
+                    
+                     
                       </tbody>
                     </table>
-                    ) }
-                   
-                    
+                  ) }
                   </div>
                   <div className="card-footer clearfix bg-header-footer">
                     <ul className="pagination pagination-sm m-0 float-right">
@@ -298,11 +321,10 @@ export const Users = () => {
               </div>
             </div>
           </div>
-        {/* MODAL INVITE USER*/}
-          <InviteUser
-            showModal={showInviteModal}
-            handleToggleModal={handleInviteUserToggleModal}
-          ></InviteUser>
+          <CreateVariable
+            showModal={showCreateVariableModal}
+            handleToggleModal={handleCreateVariableToggleModal}
+          ></CreateVariable>
           <ConfirmAction
             show={showDeleteModal}
             title="Eliminar"
@@ -310,12 +332,6 @@ export const Users = () => {
             onConfirm={handleActionDeleteConfirm}
             onCancel={handleActionDeleteCancel}
           ></ConfirmAction>
-          <UpdateUser
-            id={ItemIdSelected}
-            showModal={showUpdateModal}
-            handleToggleModal={handleUpdateUserToggleModal}
-            refetchUsers={refetchUsers}
-          ></UpdateUser>
         </section>
       </DashboardData>
     </>

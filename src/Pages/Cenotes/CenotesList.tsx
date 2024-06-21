@@ -268,9 +268,9 @@ export const List_cenotes = () => {
                           </td>
                         </tr>
                         <tr>
-                          <th>
+                          <td>
                             <input type="checkbox" />
-                          </th>
+                          </td>
                           <td>
                             {" "}
                             <a>
@@ -306,9 +306,9 @@ export const List_cenotes = () => {
                           </td>
                         </tr>
                         <tr>
-                          <th>
+                          <td>
                             <input type="checkbox" />
-                          </th>
+                          </td>
                           <td>
                             {" "}
                             <a>

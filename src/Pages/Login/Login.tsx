@@ -1,25 +1,39 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Dashboard } from "../Dashboard/Dashboard";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../Auth/AuthProvider";
-import { loginValidate } from "../../Services/UsersService";
+import { useAuthContext } from "../../Auth/AuthProvider";
+import { LoginInterface } from "../../Types/UserTypes";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import "./Login.css";
 
-import {
-  AuthResponse,
-  AuthResponseError,
-  LoginInterface,
-} from "../../Types/Types";
 
 export const Login = () => {
-  const [formData, setFormData] = useState<LoginInterface>({
-    username: "",
-    password: "",
-  });
+  const [isFormValid, setIsFormValid] = useState(false);
   const [errorResponse, setErrorResponse] = useState("");
+  const [formData, setFormData] = useState<LoginInterface>({email: "", password: ""});
+  const { getUser, login, isAuthenticated, error, user } = useAuthContext();
 
-  const auth = useAuth();
+  useEffect(() => {
+    const isFormFilled = Object.values(formData).every(value => value.trim());
+    setIsFormValid(isFormFilled ? true : false);
+}, [formData]);
+
+  useEffect(() => {
+    if(error){
+      setErrorResponse('El Usuario o Contraseña son incorrectas');
+      toast.warning("El Usuario o Contraseña son incorrectas");
+    }
+    if(isAuthenticated){
+      getUser();
+    }
+  }, [error, isAuthenticated, user]);
+ 
+  
+  if (isAuthenticated) {
+    return <Navigate to="/users" />;
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -31,46 +45,27 @@ export const Login = () => {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log(formData);
-    //auth.setIsAuthenticated(true);
-    /*try {
-      const response = await fetch("http://localhost:3000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-      if (response.ok) {
-        const json = (await response.json()) as AuthResponse;
-        console.log(json);
-
-        if (json.body.accessToken && json.body.refreshToken) {
-          auth.saveUser(json);
-        }
-      } else {
-        const json = (await response.json()) as AuthResponseError;
-
-        setErrorResponse(json.body.error);
-      }
-    } catch (error) {
-      console.log(error);
-    }*/
+    try {
+      await login(formData);
+    } catch (err) {
+      console.error('Login failed:', err);
+    }
   }
-  if (auth.isAuthenticated) {
-    return <Navigate to="/dashboard" />;
-  }
+
   return (
     <div>
       <Dashboard>
         <div className="login-bg">
           <section className="content-header">
-            <div className="container-fluid"></div>
+            <div className="container-fluid"> <ToastContainer /> </div>
           </section>
           <div className="row">
             <div className="col-md-6  text-center d-flex align-items-center justify-content-center">
               <div className="">
                 <div>
                   <h2 className="login-title">
-                    <strong>Cenoteando Data</strong>
+                    Cenoteando Data 
+                   
                   </h2>
                   <p className="lead mb-5 login-text">
                     Te damos la bienvenida a Cenoteando Data, el <br></br>
@@ -87,10 +82,13 @@ export const Login = () => {
                 <div className="card login-box-cnt">
                   <div className="card-body login-card-body">
                     {" "}
-                    <div className="d-flex justify-content-center">
-                      <p className="login-title-font-card">Iniciar Sesión</p>
+                    <div className="justify-content-center text-center">
+                      <p className="login-title-font-card text-center">Iniciar Sesión</p>
+                      {errorResponse && 
+                        <small className='text-danger text-center'>{errorResponse}</small>
+                      }
                     </div>
-                    <div className="social-auth-links text-center ">
+                    <div className="social-auth-links text-center d-none">
                       <div className="row">
                         <div className="col-md-6">
                           <a
@@ -112,16 +110,17 @@ export const Login = () => {
                         </div>
                       </div>
                     </div>
+                    {/* /.Register */}
                     <form onSubmit={handleSubmit}>
                       <div className="form-group">
                         <label htmlFor="email_adress">Correo Electrónico</label>
                         <div className=" mb-3">
                           <input
                             type="text"
-                            name="username"
-                            id="email_adress"
+                            name="email"
+                            id="email"
                             onChange={handleChange}
-                            value={formData.username}
+                            value={formData.email}
                             className="form-control"
                             placeholder="Correo Electrónico"
                           />
@@ -149,24 +148,40 @@ export const Login = () => {
                           </div>
                         </div>
                       </div>
+                      <p className="mb-1">
+                        <a href="forgot-password.html">I forgot my password</a>
+                      </p>
 
                       <div className="d-flex justify-content-center">
                         {/* /.col */}
-                        <button type="submit" className="btn btn-bg-blue">
+                        <button type="submit" disabled={!isFormValid } className="btn btn-bg-blue">
                           Ingresar
                         </button>
                         {/* /.col */}
                       </div>
                     </form>
                     {/* /.social-auth-links */}
-                    <p className="mb-1">
-                      <a href="forgot-password.html">I forgot my password</a>
-                    </p>
-                    <p className="mb-0">
-                      <a href="register.html" className="text-center">
-                        Register a new membership
-                      </a>
-                    </p>
+                    <div className="social-auth-links text-center ">
+                      <div className="row">
+                        <div className="col-md-6">
+                          <Link to="/verifycode"
+                            className="btn btn-white-border col-md-12 float-left"
+                          >
+                             <img className="mb-1" src="/src/assets/Images/register.png" alt="" /> 
+                            <p>Registrarse con código de invitación</p>
+                          </Link>
+                        </div>
+                        <div className="col-md-6">
+                          <Link to="/registerv1"
+                            className="btn btn-white-border col-md-12 float-right"
+                          >
+                            <img className="mb-1" src="/src/assets/Images/register.png" alt="" /> 
+                            <p>Registrarse con correo electrónico</p>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  
                   </div>
                   {/* /.login-card-body */}
                 </div>

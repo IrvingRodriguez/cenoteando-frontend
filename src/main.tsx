@@ -1,17 +1,49 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { ApolloClient, InMemoryCache, createHttpLink, ApolloProvider} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import App from "./App.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Register } from "./Pages/Register/Register.tsx";
+import { RegisterByEmail } from "./Pages/Register/RegisterByEmail.tsx";
 import { Login } from "./Pages/Login/Login.tsx";
-import { Dashboard } from "./Pages/Dashboard/DashboardData.tsx";
 import ProtectedRoute from "./Auth/ProtectedRoute.tsx";
 import { AuthProvider } from "./Auth/AuthProvider.tsx";
 import { Users } from "./Pages/Users/Users.tsx";
 import { Home } from "./Pages/Home/Admin/Home.tsx";
 import { CenoteProfile } from "./Pages/Cenotes/CenoteProfile/CenoteProfile.tsx";
 import { List_cenotes } from "./Pages/Cenotes/CenotesList.tsx";
+import { Variants } from "./Pages/Descriptors/Variants/Variants.tsx";
+import { References } from "./Pages/Descriptors/References/References.tsx";
+import { GeographicLayers } from "./Pages/Descriptors/GeographicLayers/GeographicLayers.tsx";
+import { SpeciesList } from "./Pages/Descriptors/Species/SpeciesList.tsx";
+import { RegisterByVerifyCode } from "./Pages/Register/RegisterByVerifyCode.tsx";
+import { RegisterByCode } from "./Pages/Register/RegisterByCode.tsx";
+
+const httpLink = createHttpLink({
+  uri: 'http://127.0.0.1:5001/cenoteando/us-central1/graphql',
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    }
+  }
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
+});
+
+/*const client = new ApolloClient({
+  connectToDevTools: true,
+  uri: "http://127.0.0.1:5001/cenoteando/us-central1/graphql",
+  cache: new InMemoryCache(),
+});*/
 
 const router = createBrowserRouter([
   {
@@ -19,11 +51,19 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/signup",
-    element: <Register />,
+    path: "/registerv1",
+    element: <RegisterByEmail />,
   },
   {
-    path: "/",
+    path: "/verifycode",
+    element: <RegisterByVerifyCode />,
+  }, 
+  {
+    path: "/registerv2/:id",
+    element: <RegisterByCode />,
+  },
+  {
+    element: <ProtectedRoute />,
     children: [
       {
         path: "/users",
@@ -41,23 +81,35 @@ const router = createBrowserRouter([
         path: "/cenotes",
         element: <List_cenotes />,
       },
-    ],
-  },
-]);
-/* {
-    path: "/data",
-    element: <ProtectedRoute />,
-    children: [
       {
-        path: "/Users",
-        element: <Users />,
+        path: "/variantes",
+        element: <Variants />,
+      },
+      {
+        path: "/referencias",
+        element: <References />,
+      },
+      {
+        path: "/geograficos",
+        element: <GeographicLayers />,
+      },
+      {
+        path: "/especies",
+        element: <SpeciesList />,
       },
     ],
-  },*/
+  }
+]);
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
-  </React.StrictMode>
+
+    <ApolloProvider client={client}>
+      <AuthProvider>
+      
+          <RouterProvider router={router} />
+        
+      </AuthProvider>
+    </ApolloProvider>
+
+
 );

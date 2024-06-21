@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { DashboardData } from "../../Dashboard/DashboardData";
 import { Gallery } from "../../../Components/Gallery/Gallery";
+import "./CenoteProfile.css";
 
 export const CenoteProfile = () => {
+  const [tabController, setTabController] = useState(
+    "custom-tabs-first-home-tab"
+  );
+  const handleTabController = (tabName: string) => {
+    setTabController(tabName);
+  };
   return (
     <div>
       <DashboardData>
@@ -122,133 +129,312 @@ export const CenoteProfile = () => {
                   >
                     <li className="nav-item">
                       <a
-                        className="nav-link"
-                        id="custom-tabs-four-home-tab"
+                        className={
+                          tabController === "custom-tabs-first-home-tab"
+                            ? "nav-link active"
+                            : "nav-link "
+                        }
+                        id="custom-tabs-first-home-tab"
                         data-toggle="pill"
-                        href="#custom-tabs-four-home"
                         role="tab"
                         aria-controls="custom-tabs-four-home"
                         aria-selected="false"
+                        onClick={() =>
+                          handleTabController("custom-tabs-first-home-tab")
+                        }
                       >
-                        Home
+                        <img
+                          className="image-center"
+                          src="/src/assets/Icons/overall-info.svg"
+                          alt=""
+                        />
+                        <br></br>
+                        Información General
                       </a>
                     </li>
                     <li className="nav-item">
                       <a
-                        className="nav-link"
-                        id="custom-tabs-four-profile-tab"
+                        className={
+                          tabController === "custom-tabs-two-home-tab"
+                            ? "nav-link active"
+                            : "nav-link "
+                        }
+                        id="custom-tabs-two-home-tab"
                         data-toggle="pill"
-                        href="#custom-tabs-four-profile"
                         role="tab"
-                        aria-controls="custom-tabs-four-profile"
+                        aria-controls="custom-tabs-two-home-tab"
                         aria-selected="false"
+                        onClick={() =>
+                          handleTabController("custom-tabs-two-home-tab")
+                        }
                       >
-                        Profile
+                        <img
+                          className="image-center"
+                          src="/src/assets/Icons/leaf.svg"
+                          alt=""
+                        />
+                        <br></br>
+                        Biodiversidad
                       </a>
                     </li>
                     <li className="nav-item">
                       <a
-                        className="nav-link"
-                        id="custom-tabs-four-messages-tab"
+                        className={
+                          tabController === "custom-tabs-three-messages-tab"
+                            ? "nav-link active"
+                            : "nav-link "
+                        }
+                        id="custom-tabs-three-messages-tab"
                         data-toggle="pill"
-                        href="#custom-tabs-four-messages"
                         role="tab"
-                        aria-controls="custom-tabs-four-messages"
+                        aria-controls="custom-tabs-three-messages-tab"
                         aria-selected="false"
+                        onClick={() =>
+                          handleTabController("custom-tabs-three-messages-tab")
+                        }
                       >
-                        Messages
+                        <img
+                          className="image-center"
+                          src="/src/assets/Icons/water.svg"
+                          alt=""
+                        />
+                        <br></br>
+                        Agua
                       </a>
                     </li>
-                    <li className="nav-item">
-                      <a
-                        className="nav-link active"
-                        id="custom-tabs-four-settings-tab"
-                        data-toggle="pill"
-                        href="#custom-tabs-four-settings"
-                        role="tab"
-                        aria-controls="custom-tabs-four-settings"
-                        aria-selected="true"
-                      >
-                        Settings
-                      </a>
-                    </li>
+                    <ul className="navbar-nav ml-auto">
+                      <li className="nav-item">
+                        <a
+                          className="nav-link"
+                          data-widget="navbar-search"
+                          data-target="#navbar-search5"
+                          href="#"
+                          role="button"
+                        >
+                          <img
+                            className="image-center"
+                            src="/src/assets/Icons/arrow-right.svg"
+                            alt=""
+                          />
+                        </a>
+                        <div
+                          className="navbar-search-block"
+                          id="navbar-search5"
+                        >
+                          <form className="form-inline">
+                            <div className="input-group input-group-sm">
+                              <input
+                                className="form-control form-control-navbar"
+                                type="search"
+                                placeholder="Search"
+                                aria-label="Search"
+                              />
+                              <div className="input-group-append">
+                                <button
+                                  className="btn btn-navbar"
+                                  type="submit"
+                                >
+                                  <i className="fas fa-search" />
+                                </button>
+                                <button
+                                  className="btn btn-navbar"
+                                  type="button"
+                                  data-widget="navbar-search"
+                                >
+                                  <i className="fas fa-times" />
+                                </button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </li>
+                    </ul>
                   </ul>
                 </div>
                 <div className="card-body">
                   <div className="tab-content" id="custom-tabs-four-tabContent">
                     <div
-                      className="tab-pane fade"
-                      id="custom-tabs-four-home"
+                      className={
+                        tabController === "custom-tabs-first-home-tab"
+                          ? "tab-pane fade show active"
+                          : "tab-pane fade"
+                      }
+                      id="custom-tabs-first-home-tab"
                       role="tabpanel"
-                      aria-labelledby="custom-tabs-four-home-tab"
+                      aria-labelledby="custom-tabs-first-home-tab"
                     >
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Proin malesuada lacus ullamcorper dui molestie, sit amet
-                      congue quam finibus. Etiam ultricies nunc non magna
-                      feugiat commodo. Etiam odio magna, mollis auctor felis
-                      vitae, ullamcorper ornare ligula. Proin pellentesque
-                      tincidunt nisi, vitae ullamcorper felis aliquam id.
-                      Pellentesque habitant morbi tristique senectus et netus et
-                      malesuada fames ac turpis egestas. Proin id orci eu lectus
-                      blandit suscipit. Phasellus porta, ante et varius ornare,
-                      sem enim sollicitudin eros, at commodo leo est vitae
-                      lacus. Etiam ut porta sem. Proin porttitor porta nisl, id
-                      tempor risus rhoncus quis. In in quam a nibh cursus
-                      pulvinar non consequat neque. Mauris lacus elit,
-                      condimentum ac condimentum at, semper vitae lectus. Cras
-                      lacinia erat eget sapien porta consectetur.
+                      {/*Informacion General*/}
+                      <div className="row">
+                        <div className="col-md-6">
+                          <div className="row">
+                            <div className="col-md-6">
+                              <h5 className="title-color title-weight">
+                                Acerca de
+                              </h5>
+                            </div>
+                            <div className="col-md-6">
+                              {" "}
+                              <p className="title-color float-right">Editar</p>
+                            </div>
+                            <div className="col-md-12">
+                              <p className="text-justify">
+                                Esta joya natural se encuentra en la Comisaría
+                                de Telchaquillo, en el Municipio de
+                                Tecoh aproximadamente una hora del centro de la
+                                Ciudad de Mérida. Es de tipo semiabierto y se
+                                caracteriza por su entrada de ensueño de
+                                unas escaleras de piedra hacía sus aguas
+                                cristalinas y refrescantes que invitan a
+                                sumergirse en ellas. Sus profundidades son un
+                                espectáculo en sí mismas, ya que a pesar de que
+                                en algunas zonas apenas llega a los 30 cm,
+                                también hay otras zonas de mayor profundidad.
+                              </p>
+                            </div>
+                            <div className="col-md-12">
+                              <div className=" column-1">
+                                <p className="left">Horario </p>
+                                <p className="right">
+                                  Lunes a Jueves: 8:00 AM - 07:00 PM Viernes:
+                                  7:00 AM - 09:30 PM Sábado: 6:30 AM - 10:30 PM
+                                  Sábado: 6:30 AM - 02:00 PM
+                                </p>
+                              </div>
+                              <div className=" column-2">
+                                <p className="left">Precio</p>
+                                <p className="right">
+                                  $150 MXN por persona
+                                  <ul>
+                                    <li>Pago en efectivo y tarjeta</li>
+                                    <li>Pago en efectivo y tarjeta</li>
+                                    <li>Pago en efectivo y tarjeta</li>
+                                  </ul>
+                                </p>
+                              </div>
+                              <div className=" column-3">
+                                <p className="left">Tipo de cenote</p>
+                                <p className="right">
+                                  Cenote Uso diverso Apto para aventura
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="row mt-5">
+                            <div className="col-md-6">
+                              <h5 className="title-color title-weight">
+                                Información General
+                              </h5>
+                            </div>
+                            <div className="col-md-6">
+                              {" "}
+                              <p className="title-color float-right">Editar</p>
+                            </div>
+                            <div className="col-md-12">
+                              <div className="container-blue">
+                                <ul className="left">
+                                  <li>Estacionamiento</li>
+                                  <li>Entrada de autobuses</li>
+                                  <li>Regaderas</li>
+                                </ul>
+                                <ul className="right">
+                                  <li>Sanitarios</li>
+                                  <li>Comedor</li>
+                                  <li>Basurero</li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="row ">
+                            <div className="col-md-6">
+                              <h5 className="title-color title-weight">
+                                Indicadores
+                              </h5>
+                            </div>
+                            <div className="col-md-6">
+                              {" "}
+                              <p className="title-color float-right">Editar</p>
+                            </div>
+                            <div className="col-md-12">
+                              <div className="container-blue">
+                                <ul className="left">
+                                  <li>Estacionamiento</li>
+                                  <li>Entrada de autobuses</li>
+                                  <li>Regaderas</li>
+                                </ul>
+                                <ul className="right">
+                                  <li>Sanitarios</li>
+                                  <li>Comedor</li>
+                                  <li>Basurero</li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="row">
+                            <div className="col-md-6">
+                              <h5 className="title-color title-weight">
+                                Accesibilidad
+                              </h5>
+                            </div>
+                            <div className="col-md-6">
+                              {" "}
+                              <p className="title-color float-right">Editar</p>
+                            </div>
+                            <div className="col-md-12">
+                              <div className="container-blue">
+                                <ul className="left">
+                                  <li>Tipo de entrada del cenote</li>
+                                  <li>Escalones</li>
+                                  <li>Material de los escalones</li>
+                                </ul>
+                                <ul className="right">
+                                  <li>Rampa para sillas de ruedas</li>
+                                  <li>Rampa para sillas de ruedas</li>
+                                  <li>Madera</li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="mapa">
+                            <iframe
+                              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d239199.86744682692!2d-89.86432684135937!3d20.485804534793676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f564163f47834fb%3A0x6c285237ee16e849!2sCenote%20Kankirixche!5e0!3m2!1ses-419!2smx!4v1716921028516!5m2!1ses-419!2smx"
+                              width={600}
+                              height={450}
+                              style={{ border: 0 }}
+                              allowFullScreen
+                              loading="lazy"
+                              className="mapa"
+                              referrerPolicy="no-referrer-when-downgrade"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      {/*END: Informacion General*/}
                     </div>
                     <div
-                      className="tab-pane fade"
-                      id="custom-tabs-four-profile"
+                      className={
+                        tabController == "custom-tabs-two-home-tab"
+                          ? "tab-pane fade show active"
+                          : "tab-pane fade"
+                      }
+                      id="custom-tabs-two-home-tab"
                       role="tabpanel"
-                      aria-labelledby="custom-tabs-four-profile-tab"
+                      aria-labelledby="custom-tabs-two-home-tab"
                     >
-                      Mauris tincidunt mi at erat gravida, eget tristique urna
-                      bibendum. Mauris pharetra purus ut ligula tempor, et
-                      vulputate metus facilisis. Lorem ipsum dolor sit amet,
-                      consectetur adipiscing elit. Vestibulum ante ipsum primis
-                      in faucibus orci luctus et ultrices posuere cubilia Curae;
-                      Maecenas sollicitudin, nisi a luctus interdum, nisl ligula
-                      placerat mi, quis posuere purus ligula eu lectus. Donec
-                      nunc tellus, elementum sit amet ultricies at, posuere nec
-                      nunc. Nunc euismod pellentesque diam.
+                      Biodiversidad Module In progress
                     </div>
                     <div
-                      className="tab-pane fade"
-                      id="custom-tabs-four-messages"
+                      className={
+                        tabController == "custom-tabs-three-messages-tab"
+                          ? "tab-pane fade show active"
+                          : "tab-pane fade"
+                      }
+                      id="custom-tabs-three-messages-tab"
                       role="tabpanel"
-                      aria-labelledby="custom-tabs-four-messages-tab"
+                      aria-labelledby="custom-tabs-three-messages-tab"
                     >
-                      Morbi turpis dolor, vulputate vitae felis non, tincidunt
-                      congue mauris. Phasellus volutpat augue id mi placerat
-                      mollis. Vivamus faucibus eu massa eget condimentum. Fusce
-                      nec hendrerit sem, ac tristique nulla. Integer vestibulum
-                      orci odio. Cras nec augue ipsum. Suspendisse ut velit
-                      condimentum, mattis urna a, malesuada nunc. Curabitur
-                      eleifend facilisis velit finibus tristique. Nam vulputate,
-                      eros non luctus efficitur, ipsum odio volutpat massa, sit
-                      amet sollicitudin est libero sed ipsum. Nulla lacinia, ex
-                      vitae gravida fermentum, lectus ipsum gravida arcu, id
-                      fermentum metus arcu vel metus. Curabitur eget sem eu
-                      risus tincidunt eleifend ac ornare magna.
-                    </div>
-                    <div
-                      className="tab-pane fade active show"
-                      id="custom-tabs-four-settings"
-                      role="tabpanel"
-                      aria-labelledby="custom-tabs-four-settings-tab"
-                    >
-                      Pellentesque vestibulum commodo nibh nec blandit. Maecenas
-                      neque magna, iaculis tempus turpis ac, ornare sodales
-                      tellus. Mauris eget blandit dolor. Quisque tincidunt
-                      venenatis vulputate. Morbi euismod molestie tristique.
-                      Vestibulum consectetur dolor a vestibulum pharetra. Donec
-                      interdum placerat urna nec pharetra. Etiam eget dapibus
-                      orci, eget aliquet urna. Nunc at consequat diam. Nunc et
-                      felis ut nisl commodo dignissim. In hac habitasse platea
-                      dictumst. Praesent imperdiet accumsan ex sit amet
-                      facilisis.
+                      Agua Module In Progress
                     </div>
                   </div>
                 </div>

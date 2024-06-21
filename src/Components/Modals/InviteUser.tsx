@@ -1,21 +1,59 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import { EnumsInterface, InviteUserInterface } from "../../Types/UserTypes";
+import { SingleModalPropsInterface } from "../../Types/UtilsTypes";
+import { useUserRoles, useInviteUser } from "../../graphql/Users/UsersCustomHooks";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
-interface Props {
-  showModal: boolean;
-  handleToggleModal?: () => void;
-}
+export const InviteUser: React.FC<SingleModalPropsInterface> = ({showModal, handleToggleModal}) => {
+  const {rolesData } = useUserRoles();
+  const { inviteUser, loading, error, success } = useInviteUser();
+  const [inviteUserFormData, setInviteUserFormData] = useState<InviteUserInterface>({
+    name: "",
+    email: "",
+    userRole: ""
+  });
 
-export const InviteUser: React.FC<Props> = ({
-  showModal,
-  handleToggleModal,
-}) => {
-  console.log(showModal);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const { name, value } = e.target;
+      setInviteUserFormData((prevState) => ({
+          ...prevState,
+          [name]: value
+      }));
+  };
+
+  const handleInviteUser = async (event: React.FormEvent) => {
+      event.preventDefault();
+      inviteUser(inviteUserFormData);
+      
+  };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(`Error inviting user: ${error.message}`);
+      if (handleToggleModal) {
+        handleToggleModal();
+      }
+    }
+    if (success) {
+      toast.success("Operación exitosa");
+      if (handleToggleModal) {
+        handleToggleModal();
+      }
+    }
+    setInviteUserFormData({
+      name: "",
+      email: "",
+      userRole: ""
+    });
+}, [error, success]);
+
   return (
     <div>
       {showModal && (
         <div
           className={`modal fade ${showModal ? "show" : ""}`}
-          id="modal-default"
+          id="modal-invite-user"
           style={{ paddingRight: 22, display: "block" }}
           aria-modal="true"
           role="dialog"
@@ -35,7 +73,7 @@ export const InviteUser: React.FC<Props> = ({
                   <span aria-hidden="true">×</span>
                 </button>
               </div>
-              <form action="">
+              <form onSubmit={evt => handleInviteUser(evt)}>
                 <div className="modal-body">
                   <div>
                     <div className="form-group">
@@ -47,9 +85,11 @@ export const InviteUser: React.FC<Props> = ({
                       </label>
                       <input
                         type="email"
+                        name="email"
                         className="form-control"
-                        id="email"
-                        placeholder=" Correo Electrónico"
+                        value={inviteUserFormData.email}
+                        onChange={handleChange}
+                        required
                       />
                     </div>
                     <div className="form-group">
@@ -60,17 +100,24 @@ export const InviteUser: React.FC<Props> = ({
                         Nombre
                       </label>
                       <input
-                        type="password"
+                        type="text"
+                        name="name"
                         className="form-control"
-                        id="name"
-                        placeholder="Nombre"
+                        value={inviteUserFormData.name}
+                        onChange={handleChange}
+                        required
                       />
                     </div>
                     <div className="form-group">
                       <label className="modal-label-c">Tipo de usuario</label>
-                      <select className="form-control">
-                        <option>Admin</option>
-                        <option>Usuario</option>
+                      <select 
+                        name="userRole"
+                        className="form-control"
+                        value={inviteUserFormData.userRole}
+                        onChange={handleChange}>
+                        {rolesData && rolesData.map((item: EnumsInterface) => (
+                          <option key={item.name}  value={item.name}>{item.name}</option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -84,8 +131,8 @@ export const InviteUser: React.FC<Props> = ({
                   >
                     Close
                   </button>
-                  <button type="button" className="btn btn-primary">
-                    Save changes
+                  <button  type="submit"  className="btn btn-primary">
+                    Invitar
                   </button>
                 </div>
               </form>
